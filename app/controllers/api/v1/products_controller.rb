@@ -4,6 +4,16 @@ class Api::V1::ProductsController < ApplicationController
     render json: products, status: 200
   end
 
+  def destroy
+    prodcut = Product.find_by(id: params[:id])
+    if prodcut
+      response = Product.destroy(params[:id])
+      render json: response, status: 200
+    else
+      render json: {error: "Product Not Found"}, status: 404
+    end
+  end
+
   def create
     product = Product.new(
       name: prod_params[:name],
